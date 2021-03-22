@@ -301,12 +301,16 @@ show_menu() {
 # Rofi command to pipe into, can add any options here
 rofi_command="rofi -dmenu -theme my_theme -width 26 -no-fixed-num-lines -yoffset -100 -i -p"
 
-
-case "$1" in
-    --status)
-        print_status
-        ;;
-    *)
-        show_menu
-        ;;
-esac
+# Check if bluetoothctl is installed before echoing status
+if ! which bluetoothctl > /dev/null; then
+        echo " %{F#FABE3F}off%{F-}"         
+else   
+        case "$1" in 
+                --status)
+                print_status
+                ;;
+        *)
+                show_menu
+                ;;
+        esac
+fi
